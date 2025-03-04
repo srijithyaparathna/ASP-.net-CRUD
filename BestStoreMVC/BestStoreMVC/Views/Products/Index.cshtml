@@ -1,0 +1,47 @@
+﻿@model List<Product>
+
+<h2 class="text-center mb-5">List of Products</h2>
+
+<div class="row mb-3">
+    <div class="col">
+        <a class="btn btn-primary" asp-action="Create">New Product</a>
+    </div>
+</div>
+
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Brand</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Image</th>
+            <th>Created At</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Id</td>
+                <td>@product.Name</td>
+                <td>@product.Brand</td>
+                <td>@product.Category</td>
+                <td>@product.Price.ToString("F2")$</td>
+                <td>
+                    <img src="/products/@product.ImageFileName" width="80" class="img-thumbnail" asp-append-version="true" />
+                </td>
+                <td>@product.CreatedAt.ToString("MM/dd/yyyy")</td>
+                <td>
+                    <a class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@product.Id">Edit</a>
+
+                    <form asp-action="DeleteConfirmed" asp-route-id="@product.Id" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
